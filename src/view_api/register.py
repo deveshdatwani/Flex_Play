@@ -13,15 +13,16 @@ def register():
         username = request.form["username"]
         password = request.form["password"]
         
-    '''
-
-    Create a user in the SQL database with the username and password in above variables
-    Use generate_password_hash function to encrypt password
+  # ---------------------------------------------------------------------
 
 
-    '''  
+    #Create a user in the SQL database with the username and password in above variables
+    #Use generate_password_hash function to encrypt password
+
+
+    # --------------------------------------------------------------------------  
 
         return 'Created Account Succesfully'
 
     else:
-        return None
+        return 'Hello'

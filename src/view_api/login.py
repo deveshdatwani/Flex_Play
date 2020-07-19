@@ -12,16 +12,18 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         player = None
+
+    # -----------------------------------------------------------
     
-    ''' 
 
-    Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
-    Store the information in the object player
-    Use generate_password_hash on password before using check_password_hash
+    #Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
+    #Store the information in the object player
+    #Use generate_password_hash on password before using check_password_hash
 
-    '''
 
-        #Authentication
+    # ---------------------------------------------------------------------
+
+        #Authentication below
 
         if player is None:
             response= "User not found"

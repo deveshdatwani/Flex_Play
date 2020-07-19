@@ -15,13 +15,16 @@ def login():
         password = request.form["password"]
         player = None
     
-    ''' 
+    # ------------------------------------------------------------- 
 
-    Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
-    Store the information in the object player
 
-    '''
+    #Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
+    #Store the information in the object player
 
+
+    # ------------------------------------------------------------------------
+
+        
         #Authenticate user credentials before returning user information
 
         if player is None:
