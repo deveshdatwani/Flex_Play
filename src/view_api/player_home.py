@@ -1,17 +1,17 @@
 import functools
-
 from flask import Blueprint
 from flask import flash
 from flask import request
 from werkzeug.security import check_password_hash
 from werkzeug.security import generate_password_hash
+from flask import jsonify
 
-bp = Blueprint("login", __name__)
+bp = Blueprint("player_home", __name__)
 
-@bp.route("/login", methods=("GET", "POST"))
+@bp.route("/player_home", methods=("GET", "POST"))
 def login():
     """Log in a registered user by adding the user id to the session."""
-    error = 'HI'
+    error = 'Player Home'
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
@@ -28,6 +28,6 @@ def login():
             error = "Incorrect password."
 
         if error is None:
-            error = 'Login Succesful'
+            error = jsonify(username, password)
         
     return error
