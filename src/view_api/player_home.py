@@ -9,24 +9,28 @@ bp = Blueprint("player_home", __name__)
 
 @bp.route("/player_home", methods=("GET", "POST"))
 def login():
-    """Log in a registered user by adding the user id to the session."""
 
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        db = get_db()
-        response = None
-        user = db.execute(
-            "SELECT * FROM user WHERE username = ?", (username,)
-        ).fetchone()
+        player = None
+    
+    ''' 
 
-        if user is None:
-            response= "Incorrect username."
+    Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
+    Store the information in the object player
+
+    '''
+
+        #Authenticate user credentials before returning user information
+
+        if player is None:
+            response= "User not found"
         
-        elif not check_password_hash(user["password"], password):
-            response= "Incorrect password."
+        elif not check_password_hash(player["password"], password):
+            response = 'Incorrect password'
 
-        if response is None:
-            response = jsonify(username)
+        elif check_password_hash(player['password'], password):
+            response = player
         
     return response
