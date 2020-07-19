@@ -30,4 +30,7 @@ def register():
             )
             db.commit()
             
-    return 'Created Account Succesfully'
+        return 'Created Account Succesfully'
+
+    else:
+        return 'Enter Details'
