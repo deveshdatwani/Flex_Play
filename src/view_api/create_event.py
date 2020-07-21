@@ -11,7 +11,7 @@ def create_event():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        event_arena = request.form['event_arena']
+        event_arena = request.form['eventarena']
         location = request.form['location']
 
         #-----------------------------------------------------------------
