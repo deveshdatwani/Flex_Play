@@ -14,4 +14,4 @@ def login():
         password = request.form["password"]
         access, player = authorization(username, password)
   
-    return access, player
+    return access

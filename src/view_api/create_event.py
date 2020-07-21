@@ -5,7 +5,7 @@ from authorization import authorization
 
 bp = Blueprint("create_event", __name__)
 
-@bp.route('player_home/create_event', methods=['GET','POST'])
+@bp.route('/player_home/create_event', methods=['GET','POST'])
 def create_event():
 
     if request.method == "POST":
