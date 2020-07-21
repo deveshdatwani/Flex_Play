@@ -1,39 +1,36 @@
-import functools
 from flask import Blueprint
 from flask import request
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
 from flask import jsonify
+from authorization import authorization
 
 bp = Blueprint("player_home", __name__)
 
 @bp.route("/player_home", methods=("GET", "POST"))
-def login():
+def player_home():
 
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
+        location = request.form['location']
         player = None
+        access, player = authorization(username, password)
     
-    # ------------------------------------------------------------- 
+    return player
 
 
-    #Add code to fire a query to the SQL database in order to retrieve user iformation from user's username
-    #Store the information in the object player
+@bp.route('player_home/create_event', methods=['GET','POST'])
+def create_event():
 
+    if request.method == "POST":
+        username = request.form["username"]
+        password = request.form["password"]
+        event_arena = request.form['event_arena']
+        location = request.form['location']
 
-    # ------------------------------------------------------------------------
+        #-----------------------------------------------------------------
 
-        
-        #Authenticate user credentials before returning user information
+        #Add code to create a new Event table in the SQL database
 
-        if player is None:
-            response= "User not found"
-        
-        elif not check_password_hash(player["password"], password):
-            response = 'Incorrect password'
+        #-----------------------------------------------------------------
 
-        elif check_password_hash(player['password'], password):
-            response = player
-        
-    return response
+    return new_event

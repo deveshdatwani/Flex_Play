@@ -1,5 +1,5 @@
 import os
-import login, register, player_home
+import login, register, player_home, match_making
 from flask import Flask
 
 def create_app(test_config=None):
@@ -21,6 +21,7 @@ def create_app(test_config=None):
     app.register_blueprint(register.bp)
     app.register_blueprint(login.bp)
     app.register_blueprint(player_home.bp)
-
+    app.register_blueprint(match_making.bp)
+    
     return app
 
