@@ -1,8 +1,5 @@
-import functools
 from flask import Blueprint
 from flask import request
-from werkzeug.security import check_password_hash
-from werkzeug.security import generate_password_hash
 from flask import jsonify
 
 bp = Blueprint("group_home", __name__)
@@ -13,7 +10,6 @@ def login():
     if request.method == "POST":
         group_id = request.form['groupid']
     
-
         # --------------------------------------------------------------
 
         #Add code to fire a query to the SQL database in order to retrieve details of ALL players in the group table mentioned
