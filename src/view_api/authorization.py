@@ -1,7 +1,10 @@
 from werkzeug.security import check_password_hash
+import mysql.connector 
 
 def authorization(username, password):
 
+	connector = mysql.connector.connect(user='root',database='flex_play',host='localhost',password='flexplay')
+	
 	player = None
 	
 	if player is None:
