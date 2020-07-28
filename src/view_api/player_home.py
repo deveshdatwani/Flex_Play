@@ -11,9 +11,7 @@ def player_home():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        location = request.form['location']
-        player = None
         access, player = authorization(username, password)
     
-    return player
+    return access, player
 
