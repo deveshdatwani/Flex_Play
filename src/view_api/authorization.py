@@ -20,11 +20,11 @@ def authorization(username, password):
 		response = "User not found"
 		access = False
 
-	elif not player["password"] ==  password:
+	elif not check_password_hash(player["password"], password):
 		response = 'Incorrect password'
 		access = False
 
-	elif player['password'] == password:
+	elif check_password_hash(player['password'], password):
 		response = player 
 		access = True
 	
