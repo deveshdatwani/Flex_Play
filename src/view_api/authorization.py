@@ -7,7 +7,7 @@ def authorization(username, password):
 	if connector.is_connected():
 		cursor = connector.cursor()
 		query = 'SELECT * FROM players_master WHERE username = "' + username + '"'
-		Player = cursor.execute(query)
+		cursor.execute(query)
 		Player = cursor.fetchone()
 		
 		if Player is not None:
