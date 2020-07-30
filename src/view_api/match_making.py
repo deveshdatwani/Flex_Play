@@ -9,8 +9,9 @@ def make_match(timeslot, location):
 	connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
 	
 	if connector.is_connected():
+		privacy = 0
 		cursor = connector.cursor()
-		query = 'SELECT * FROM events_master WHERE timeslot = %s;'
+		query = 'SELECT * FROM events_master WHERE timeslot = %s AND privacy = 0;'
 		val = timeslot
 		cursor.execute(query, (val,))
 		events = cursor.fetchall()
