@@ -18,15 +18,15 @@ def authorization(username, password):
 
 	if Player is None:
 		response = "User not found"
-		access = False
+		access = {'access' : False}
 
 	elif not check_password_hash(player["password"], password):
 		response = 'Incorrect password'
-		access = False
+		access = {'access' : False}
 
 	elif check_password_hash(player['password'], password):
 		response = player 
-		access = True
+		access = {'access' : True}
 	
 	cursor.close()
 	connector.close() 

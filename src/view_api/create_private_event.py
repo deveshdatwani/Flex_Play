@@ -3,10 +3,10 @@ from flask import request
 from flask import jsonify
 import mysql.connector
 
-bp = Blueprint("create_event", __name__)
+bp = Blueprint("create_private_event", __name__)
 
-@bp.route('/create_event', methods=['GET','POST'])
-def create_event():
+@bp.route('/create_private_event', methods=['GET','POST'])
+def create_private_event():
 
     if request.method == "POST":
         creater = request.form["creater"]
