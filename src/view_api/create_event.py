@@ -9,19 +9,22 @@ bp = Blueprint("create_event", __name__)
 def create_event():
 
     if request.method == "POST":
-        creater = request.form["creater"]
-        event_arena = request.form['eventarena']
+        creater = request.form['creater']
+        player = request.form['player']
+        daytime = request.form['daytime']
+        eventarena = request.form['eventarena']
         location = request.form['location']
         team = request.form['team']
-        players = request.form['players']
-        timeslot = request.form['timeslot']
+        #players = request.form['players']
+        #timeslot = request.form['timeslot']
         privacy = request.form['privacy']
+        gameplaytime = request.form['gameplaytime']
         connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
     
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)
-            query = "INSERT INTO events_master (creater, eventarena, location, team, players, timeslot, privacy) VALUES (%s, %s, %s, %s, %s, %s, %s);" 
-            val = creater, event_arena, location, team, players, timeslot, privacy
+            query = "INSERT INTO events_master(creater, player, daytime, eventarena, location, team, privacy, gameplaytime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);" 
+            val = creater, player, daytime, eventarena, location, team, privacy, gameplaytime
             cursor.execute(query, val)
             connector.commit() 
             response = 'Created Event Successfully'
