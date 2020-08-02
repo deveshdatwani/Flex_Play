@@ -13,5 +13,4 @@ def player_home():
         password = request.form["password"]
         access, player = authorization(username, password)
     
-    return access, player
-
+    return player
