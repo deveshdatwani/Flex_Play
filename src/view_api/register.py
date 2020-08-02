@@ -17,14 +17,14 @@ def register():
         password = generate_password_hash(request.form["password"])
         firstname = request.form['firstname']
         lastname = request.form['lastname']
-        emailid = request.form['emailid']
+        emailid = request.form['email']
         phonenumber = request.form['phonenumber']
         teamname = request.form['teamname']      
         connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
     
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)
-            query = "INSERT INTO players_master (player_id, username, password, firstname, lastname, emailid, phonenumber, teamname) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);" 
+            query = "INSERT INTO players_master (playerid, username, password, firstname, lastname, email, phonenumber, teamname) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);" 
             val = player_id, username, password, firstname, lastname, emailid, phonenumber, teamname
             cursor.execute(query, val)
             connector.commit() 
