@@ -12,7 +12,7 @@ def authorization(username, password):
 		
 		if Player is not None:
 			player_info = Player 	
-			columns = ('player_id','username','firstname','lastname','emailid','password','phonenumber','teamname')
+			columns = ('playerid','username','firstname','lastname','email','phonenumber','groupid','teamname','password')
 			player_info_tuple = zip(columns, player_info)
 			player = dict(player_info_tuple)
 
