@@ -13,18 +13,17 @@ def create_event():
         player = request.form['player']
         daytime = request.form['daytime']
         eventarena = request.form['eventarena']
-        location = request.form['location']
+        latitude = request.form['latitude']
+        longitude = request.form['longitude']
         team = request.form['team']
-        #players = request.form['players']
-        #timeslot = request.form['timeslot']
         privacy = request.form['privacy']
         gameplaytime = request.form['gameplaytime']
         connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
     
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)
-            query = "INSERT INTO events_master(creater, player, daytime, eventarena, location, team, privacy, gameplaytime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);" 
-            val = creater, player, daytime, eventarena, location, team, privacy, gameplaytime
+            query = "INSERT INTO events_master(creater, player, daytime, eventarena, lat, lng, team, privacy, gameplaytime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);" 
+            val = creater, player, daytime, eventarena, latitude, longitude, team, privacy, gameplaytime
             cursor.execute(query, val)
             connector.commit() 
             response = 'Created Event Successfully'
