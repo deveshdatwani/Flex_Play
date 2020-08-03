@@ -14,7 +14,7 @@ def group_events():
 		connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
 	
 	if connector.is_connected():
-		cursor = connector.cursor()
+		cursor = connector.cursor(buffered=True)
 		query = 'SELECT teamname FROM players_master WHERE username = "' + username + '"'
 		cursor.execute(query)
 		teamname = cursor.fetchone()

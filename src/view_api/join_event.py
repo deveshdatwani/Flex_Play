@@ -5,7 +5,7 @@ import mysql.connector
 
 bp = Blueprint("join_event", __name__)
 
-@bp.route('/create_event', methods=['GET','POST'])
+@bp.route('/join_event', methods=['GET','POST'])
 def join_event():
 
     if request.method == "POST":

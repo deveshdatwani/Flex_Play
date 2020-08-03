@@ -1,5 +1,5 @@
 import os
-import login, register, player_home, match_making, create_event, group_home, group_events, join_event
+import login, register, player_home, match_making, create_event, group_home, group_events, join_event, group_event_home
 from flask import Flask
 
 def create_app(test_config=None):
@@ -26,6 +26,7 @@ def create_app(test_config=None):
     app.register_blueprint(group_home.bp)
     app.register_blueprint(group_events.bp)
     app.register_blueprint(join_event.bp)
+    app.register_blueprint(group_event_home.bp)
 
     return app
 
