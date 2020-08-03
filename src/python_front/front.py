@@ -1,54 +1,55 @@
-import kivy
-from kivy.app import App
-from kivy.uix.label import Label
-from kivy.uix.gridlayout import GridLayout
-from kivy.uix.textinput import TextInput
-kivy.require('1.01.1')
-from kivy.uix.button import Button
+from kivymd.app import MDApp
+from kivymd.uix.label import MDLabel, MDIcon
+from kivymd.uix.screen import Screen
+from kivymd.uix.button import MDFloatingActionButton
+from kivymd.uix.textfield import MDTextField
+from kivy.lang import Builder
 import requests
-import ast
+from kivy.uix.screenmanager import ScreenManager
 
-class ConnectPage(GridLayout):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-		self.cols = 2
+class Front(MDApp):
 
-		self.add_widget(Label(text='username:'))
-		self.username = TextInput(multiline=False,pos=(30,30))
-		self.add_widget(self.username)
+	def login_page(self):
+		screen = Screen()
+		self.theme_cls.primary_palette = 'Green'
+		self.theme_cls.theme_style = 'Dark'
+		front_label = MDLabel(text='Welcome Champion!!!',
+				      halign='center',
+				      theme_text_color='Secondary',
+				      font_style='H3',
+				      pos_hint={'center_x':0.5,'center_y':0.65})
+		button_flat = MDFloatingActionButton(icon='soccer',
+						    pos_hint={'center_x':0.5, 'center_y':0.13},
+						    on_release=self.login)
+		self.username = MDTextField(text='username',
+				      pos_hint={'center_x':0.5,'center_y':0.4},
+				      size_hint_x=None,width=300)
+		self.password = MDTextField(text='password',
+				      pos_hint={'center_x':0.5,'center_y':0.3},
+				      size_hint_x=None,width=300)
+		screen.add_widget(self.password)
+		screen.add_widget(self.username)
+		screen.add_widget(button_flat)
+		screen.add_widget(front_label)
+
+		return screen
+
+	def login(self,obj):
+		screen2 = Screen()
+		myobj = {'username':self.username.text, 'password':self.password.text}
+		response = requests.post('http://127.0.0.1:5000/login', data = myobj)
 		
-		self.add_widget(Label(text='password:'))
-		self.password = TextInput(multiline=False)
-		self.add_widget(self.password)
+		if response.json()[0]['access']:
+			front_label = MDLabel(text='Welcome',
+					      halign='center',
+					      theme_text_color='Secondary',
+					      font_style='H3',
+					      pos_hint={'center_x':0.5,'center_y':0.65})
 
-		self.register = Button(text='register new user')
-		self.add_widget(self.register)
+			screen2.add_widget(front_label)
+		
+		return screen2
 
-		self.signin = Button(text='sign in')
-		self.signin.bind(on_press=self.sign_in)
-		self.add_widget(self.signin)
-
-	def sign_in(self, instance):
-		username = self.username.text
-		password = self.password.text
-		url = 'http://127.0.0.1:5000/login'
-		response = requests.post(url, data={'username':username, 'password':password}).content
-		response = response.decode('UTF-8')
-		response = ast.literal_eval(response)
-		print(response)
-
-		if response['access']:
-			return Sign_In_Page()
-
-class Sign_In_Page(GridLayout):
-	def __init__(self, **kwargs):
-		super().__init__(**kwargs)
-		self.add_widget(Label(text='Your are signed in'))
-
-
-class Flex_Play(App):
-	def build(self):
-		return ConnectPage()
 
 if __name__ == '__main__':
-	Flex_Play().run()
+	Front().run()
