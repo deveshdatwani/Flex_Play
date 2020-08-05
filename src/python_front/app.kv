@@ -1,0 +1,180 @@
+WindowManager:
+	id: screen_manager
+	MainWindow:
+		id: main
+		name: 'Main'
+		manager: screen_manager
+	PlayerHome:
+		id: playerhome
+		name: 'PlayerHome'
+		manager: screen_manager
+		username: main.username
+		firstname: main.firstname
+		email: main.email
+		phonenumber: main.phonenumber
+	GroupHome:
+		id: grouphome
+		name: 'GroupHome'
+		groupplayers: playerhome.groupplayers
+	CreateGroupEvent:
+		id: creategroupevent
+		name: 'CreateGroupEvent'
+		username: main.username
+
+<MainWindow>:
+	
+	FloatLayout:
+		size:(200,300)
+
+		Label: 
+			text: 'Login'
+			size_hint:(0.9,0.5)
+			pos:(25,400)
+
+		TextInput:
+			text:'username'
+			id: username
+			multiline: False
+			size_hint:(0.9,0.10)
+			pos:(25,340)
+		
+		TextInput:
+			text:'password'
+			id: passw
+			multiline: False
+			size_hint:(0.9,0.10)
+			pos:(25,250)
+				
+		Button:
+			text:'Submit'
+			size_hint: (0.9,0.15)
+			pos:(25,10)
+			on_release: 
+				app.root.current = 'PlayerHome' if root.login(username.text,passw.text) == True else 'Main'
+				root.manager.transition.direction = 'left'
+
+<PlayerHome>:
+	
+	FloatLayout:
+
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(25,20)
+			text:'GroupHome'
+			on_release: 
+				app.root.current = 'GroupHome'
+				root.manager.transition.direction = 'left'
+				root.go_to_group_home(root.username)
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(200,20)
+			text:'CreateEvent'
+			on_release: 
+				app.root.current = 'Main'
+				root.manager.transition.direction = 'right'
+
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(375,20)
+			text:'FindEvents'
+			on_release: 
+				app.root.current = 'Main'
+				root.manager.transition.direction = 'right'
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,450)
+			text: 'Welcome ' + root.firstname
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(60,350)
+			text: 'email: ' + root.email
+	
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(375,350)
+			text: 'phone :' + root.phonenumber
+
+<GroupHome>
+	
+	FloatLayout: 
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,450)
+			text: 'Welcome to Group'
+
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(100,20)
+			text:'Create Event'
+			on_release: 
+				app.root.current = 'CreateGroupEvent'
+				root.manager.transition.direction = 'left'
+
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(275,20)
+			text:'FindEvents'
+			on_release: 
+				app.root.current = 'CreateGroupEvent'
+				root.manager.transition.direction = 'left'
+
+<CreateGroupEvent>
+	
+	FloatLayout: 
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,450)
+			text: 'Welcome to Create Group Event'
+
+		TextInput:
+			text:'Event Arena'
+			id: eventarena
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,340)
+		
+		TextInput:
+			text:'Time'
+			id: time
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,290)
+
+		TextInput:
+			text:'Date'
+			id: date
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,240)
+
+		TextInput:
+			text:'Duration'
+			id: duration
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,190)
+
+		TextInput:
+			text:'Latitude'
+			id: latitude
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,140)
+
+		TextInput:
+			text:'Longitude'
+			id: longitude
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,110)
+
+		Button:
+			text: 'Create'
+			size_hint:(0.4,0.1)
+			pos:(75,40)
+			on_release: root.create_event(root.username, eventarena.text, time.text, date.text, duration.text, event.text)
+
