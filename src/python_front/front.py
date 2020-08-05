@@ -11,8 +11,8 @@ class Front(MDApp):
 
 	def login_page(self):
 		screen = Screen()
-		self.theme_cls.primary_palette = 'Green'
-		self.theme_cls.theme_style = 'Dark'
+		theme_cls.primary_palette = 'Green'
+		theme_cls.theme_style = 'Dark'
 		front_label = MDLabel(text='Welcome Champion!!!',
 				      halign='center',
 				      theme_text_color='Secondary',
@@ -21,34 +21,34 @@ class Front(MDApp):
 		button_flat = MDFloatingActionButton(icon='soccer',
 						    pos_hint={'center_x':0.5, 'center_y':0.13},
 						    on_release=self.login)
-		self.username = MDTextField(text='username',
+		username = MDTextField(text='username',
 				      pos_hint={'center_x':0.5,'center_y':0.4},
 				      size_hint_x=None,width=300)
-		self.password = MDTextField(text='password',
+		password = MDTextField(text='password',
 				      pos_hint={'center_x':0.5,'center_y':0.3},
 				      size_hint_x=None,width=300)
-		screen.add_widget(self.password)
-		screen.add_widget(self.username)
+		screen.add_widget(password)
+		screen.add_widget(username)
 		screen.add_widget(button_flat)
 		screen.add_widget(front_label)
 
 		return screen
 
-	def login(self,obj):
-		screen2 = Screen()
-		myobj = {'username':self.username.text, 'password':self.password.text}
-		response = requests.post('http://127.0.0.1:5000/login', data = myobj)
-		
-		if response.json()[0]['access']:
-			front_label = MDLabel(text='Welcome',
-					      halign='center',
-					      theme_text_color='Secondary',
-					      font_style='H3',
-					      pos_hint={'center_x':0.5,'center_y':0.65})
+#	def login(self,obj):
+#		screen2 = Screen()
+#		myobj = {'username':self.username.text, 'password':self.password.text}
+#		response = requests.post('http://127.0.0.1:5000/login', data = myobj)
+#		
+#		if response.json()[0]['access']:
+#			front_label = MDLabel(text='Welcome',
+#					      halign='center',
+#					      theme_text_color='Secondary',
+#					      font_style='H3',
+#					      pos_hint={'center_x':0.5,'center_y':0.65})
 
-			screen2.add_widget(front_label)
+#			screen2.add_widget(front_label)
 		
-		return screen2
+#		return screen2
 
 
 if __name__ == '__main__':

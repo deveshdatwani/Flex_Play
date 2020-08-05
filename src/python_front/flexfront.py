@@ -15,6 +15,7 @@ class MainWindow(Screen):
 	firstname = StringProperty('')
 	email = StringProperty('')
 	phonenumber = StringProperty('')
+	team = StringProperty('')
 	
 	def login(self,username,password):
 		url = 'http://127.0.0.1:5000/login'
@@ -24,7 +25,8 @@ class MainWindow(Screen):
 		self.firstname = response.json()[1]['firstname']
 		self.email = response.json()[1]['email']
 		self.phonenumber = str(response.json()[1]['phonenumber'])
-		print(response.json()[1])
+		self.team = response.json()[1]['email']
+		
 		return response.json()[0]['access']
 	pass
 
@@ -42,6 +44,7 @@ class PlayerHome(Screen):
 		obj = {'username':username}
 		response = requests.post(url=url, data = obj)
 		self.groupplayers = response.content.decode('utf-8').split(',')
+		print(type(self.groupplayers))
 
 	pass
 
@@ -51,32 +54,52 @@ class WindowManager(ScreenManager):
 class GroupHome(Screen):
 	username = StringProperty('')
 	groupplayers = ListProperty('')
+	response = StringProperty('')
+	groupevents = StringProperty('')
+
+	def see_group_events(self,username):
+		url = 'http://127.0.0.1:5000/group_events'
+		obj = {'username':username}
+		response = requests.post(url=url, data = obj)
+		response = response.content.decode('utf-8')
+		self.groupevents = response
 
 	pass
 
 class CreateGroupEvent(Screen):
 
 	username = StringProperty('')
+	team = StringProperty('')
 
-	def create_event(self,username,player,eventarena,time,date,gameplayduration,latitude,longitude):
+	def create_event(self,username,eventarena,daytime,gameplayduration,latitude,longitude,team):
 
-		username = username
-		url = 'http://127.0.0.1:5000/group_home'
-		obj = {'username':username,
+		url = 'http://127.0.0.1:5000/create_event'
+		obj = {'creater':username,
 			   'player':username,
+			   'eventarena':eventarena,
+			   'daytime':daytime,
+			   'gameplaytime':gameplayduration,
 			   'latitude':latitude,
 			   'longitude':longitude,
-			   'daytime':daytime,
 			   'team':team,
-			   'eventarena':eventarena,
-			   'privacy':1,
-			   ''   }
-		response = requests.post(url=url, data = obj)
-
+			   'privacy':1
+			    }
 		pass
 	
 	pass
 
+class SeeGroupEvents(Screen):
+
+	groupevents = StringProperty('')
+
+	pass
+
+class CreateEvent(Screen):
+
+	team = StringProperty('')
+	username = StringProperty('')
+
+	pass
 
 kv = Builder.load_file('app.kv')
 

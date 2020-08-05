@@ -26,15 +26,26 @@ def group_events():
 		#connector.close()
 		group = [x[0] for x in group]
 		group = ','.join(group)
-		print(group)
 
 	if group is not None:
 		group = group.split(',')
+		event_list = []
+		string_list = []
 		
 		for player in group:
 			query = 'SELECT * FROM events_master WHERE creater = "' + player + '"'
 			cursor.execute(query)
 			event = cursor.fetchone()
-			print(event)
+			if event is not None:
+				event_list.append(event)
+		for i in event_list:
+			for j in i:
+				string_list.append(str(j))
+				print(j)
 
-	return 'Hey'
+		
+	string_list = ','.join(string_list)
+
+	print(string_list)
+
+	return string_list

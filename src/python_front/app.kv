@@ -1,3 +1,6 @@
+#: import ListAdapter kivy.adapters.listadapter.ListAdapter
+#: import ListItemButton kivy.uix.listview.ListItemButton
+
 WindowManager:
 	id: screen_manager
 	MainWindow:
@@ -16,10 +19,21 @@ WindowManager:
 		id: grouphome
 		name: 'GroupHome'
 		groupplayers: playerhome.groupplayers
+		username: playerhome.username
 	CreateGroupEvent:
 		id: creategroupevent
 		name: 'CreateGroupEvent'
 		username: main.username
+		team:main.team
+	SeeGroupEvents:
+		id: seegroupevents
+		name: 'SeeGroupEvents'
+		groupevents:grouphome.groupevents
+	CreateEvent:
+		id: createhome
+		name: 'CreateEvent'
+		team: main.team
+		username: playerhome.username
 
 <MainWindow>:
 	
@@ -70,8 +84,8 @@ WindowManager:
 			pos:(200,20)
 			text:'CreateEvent'
 			on_release: 
-				app.root.current = 'Main'
-				root.manager.transition.direction = 'right'
+				app.root.current = 'CreateEvent'
+				root.manager.transition.direction = 'left'
 
 		Button:
 			size_hint:(0.2,0.2)
@@ -100,6 +114,10 @@ WindowManager:
 	
 	FloatLayout: 
 
+        ListView:
+        	pos: (0,-120)
+        	item_strings: root.groupplayers
+
 		Label:
 			size_hint:(0.2,0.2)
 			pos:(200,450)
@@ -116,10 +134,19 @@ WindowManager:
 		Button:
 			size_hint:(0.2,0.2)
 			pos:(275,20)
-			text:'FindEvents'
+			text:'See Events'
 			on_release: 
-				app.root.current = 'CreateGroupEvent'
+				app.root.current = 'SeeGroupEvents'
 				root.manager.transition.direction = 'left'
+				root.see_group_events(root.username)
+		
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'PlayerHome'
+				root.manager.transition.direction = 'right'
 
 <CreateGroupEvent>
 	
@@ -135,46 +162,120 @@ WindowManager:
 			id: eventarena
 			multiline: False
 			size_hint:(0.5,0.05)
-			pos:(125,340)
-		
-		TextInput:
-			text:'Time'
-			id: time
-			multiline: False
-			size_hint:(0.5,0.05)
-			pos:(125,290)
+			pos:(125,360)
 
 		TextInput:
-			text:'Date'
-			id: date
+			text:'Day Time'
+			id: daytime
 			multiline: False
 			size_hint:(0.5,0.05)
-			pos:(125,240)
+			pos:(125,310)
 
 		TextInput:
 			text:'Duration'
 			id: duration
 			multiline: False
 			size_hint:(0.5,0.05)
-			pos:(125,190)
+			pos:(125,260)
 
 		TextInput:
 			text:'Latitude'
 			id: latitude
 			multiline: False
 			size_hint:(0.5,0.05)
-			pos:(125,140)
+			pos:(125,210)
 
 		TextInput:
 			text:'Longitude'
 			id: longitude
 			multiline: False
 			size_hint:(0.5,0.05)
-			pos:(125,110)
+			pos:(125,160)
 
 		Button:
 			text: 'Create'
 			size_hint:(0.4,0.1)
-			pos:(75,40)
-			on_release: root.create_event(root.username, eventarena.text, time.text, date.text, duration.text, event.text)
+			pos:(125,40)
+			on_release: root.create_event(root.username, eventarena.text, daytime.text, duration.text, latitude.text, longitude.text, root.team)
 
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'GroupHome'
+				root.manager.transition.direction = 'right'
+
+<SeeGroupEvents>
+
+	FloatLayout:
+
+		Label:
+			text:root.groupevents
+			size_hint:(0.2,0.2)
+			pos:(100,100)
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'GroupHome'
+				root.manager.transition.direction = 'right'
+<CreateEvent>
+
+	FloatLayout: 
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,450)
+			text: 'Welcome to Create Group Event'
+
+		TextInput:
+			text:'Event Arena'
+			id: eventarena
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,360)
+
+		TextInput:
+			text:'Day Time'
+			id: daytime
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,310)
+
+		TextInput:
+			text:'Duration'
+			id: duration
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,260)
+
+		TextInput:
+			text:'Latitude'
+			id: latitude
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,210)
+
+		TextInput:
+			text:'Longitude'
+			id: longitude
+			multiline: False
+			size_hint:(0.5,0.05)
+			pos:(125,160)
+
+		Button:
+			text: 'Create'
+			size_hint:(0.4,0.1)
+			pos:(125,40)
+			on_release: root.create_event(root.username, eventarena.text, daytime.text, duration.text, latitude.text, longitude.text, root.team)
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'PlayerHome'
+				root.manager.transition.direction = 'right'

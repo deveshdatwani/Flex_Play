@@ -6,7 +6,7 @@ from kivymd.uix.textfield import MDTextField
 from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen, ScreenManager
 from kivy.properties import StringProperty
-
+import requests
 
 screen_helper = """
 ScreenManager:
@@ -24,7 +24,7 @@ ScreenManager:
 	MDFloatingActionButton:
 		icon:'soccer'
 		pos_hint:{'center_x':0.5, 'center_y':0.13}
-		on_release:[lambda x: app.go()]
+		on_press:root.manager.current = 'profile'
 	MDTextField:
 		text:'username'
 		pos_hint:{'center_x':0.5,'center_y':0.4}
@@ -39,7 +39,7 @@ ScreenManager:
 <PlayerHomeScreen>:
 	name: 'profile'
 	MDLabel:
-		text:'Hey'
+		text:root.generate_name()
 		halign:'center'
 		theme_text_color:'Secondary'
 		font_style:'H3'
@@ -47,16 +47,22 @@ ScreenManager:
 """
 
 class LoginScreen(Screen):
-	def name_gen(self):
-		print('hello')
-	pass
-	
+	def login(self):
+		url = 'http://127.0.0.1:5000/login'
+		obj = {'username':'deveshdatwani','password':'devesh'}
+		response = requests.post(url=url,data=obj).json()
+		if response[0]['access']:
+			return str(response[0]['access'])
+
+	def pri(self,check):
+		print(check)		
 
 class PlayerHomeScreen(Screen):
 	def generate_name(self):
-		elf = 'Devesh'
+		
 
-		return elf
+		return 'hello'
+		
 	
 	pass
 
