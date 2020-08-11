@@ -33,7 +33,7 @@ def group_events():
 		string_list = []
 		
 		for player in group:
-			query = 'SELECT * FROM events_master WHERE creater = "' + player + '"'
+			query = 'SELECT creater,eventarena,daytime,gameplaytime FROM events_master WHERE creater = "' + player + '"'
 			cursor.execute(query)
 			event = cursor.fetchone()
 			if event is not None:

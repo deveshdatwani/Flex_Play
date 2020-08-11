@@ -70,13 +70,10 @@ class GroupHome(Screen):
 		obj = {'username':username}
 		response = requests.post(url=url, data = obj)
 		response = response.content.decode('utf-8')
-		print(response)
 		response = response.replace(',', '\t')
 		event_list =response.split('\t')
-		print(event_list)
 		self.groupevents = [str(event_list[i:i+3]) for i in range(0,len(event_list),4)]
 		self.groupevents	
-		print(self.groupevents)
 	
 	pass
 
@@ -107,15 +104,35 @@ class CreateGroupEvent(Screen):
 
 class SeeGroupEvents(Screen):
 
-	self.groupevents = ListProperty('')
+	groupevents = ListProperty('')
+	eventplayers = ListProperty('')
 
 	@mainthread
 	def on_enter(self):
-		for i in self.allgroupevents:
-			button = Button(text=i,pos=(150,200),size_hint=(0.1,0.1))
-			self.ids.seeallgroupevents.add_widget(button)
+		for i,event in enumerate(self.groupevents):
+			print(event)
+			event = Button(text=event,pos=(60,200+(i*100)),size_hint=(0.8,0.1))
+			self.ids.seeallgroupevents.add_widget(event)
+			event.bind(on_press=self.sayhi)
 
+	def sayhi(self,what):
 
+		events = what.text.split(',')
+		creater = events[0]
+		daytime = events[2]
+		creater = creater.split("'")[1]
+		daytime = daytime.split("'")[1]
+		self.manager.current = 'SeeEventDetails'
+
+		url = 'http://127.0.0.1:5000/see_event_details'
+		obj = {'creater':creater, 'daytime':daytime}
+		response = requests.post(url=url, data = obj)
+		self.eventplayers = response.content.split(",")
+
+		return self.eventplayers
+
+	self.eventplayers = ['jasman']
+	
 	pass
 
 class CreateEvent(Screen):
@@ -145,6 +162,11 @@ class CreateEvent(Screen):
 
 class FindEvents(Screen):
 
+	pass
+
+class SeeEventDetails(Screen):
+
+	eventplayers = ListProperty('')
 	pass
 
 kv = Builder.load_file('app.kv')
