@@ -2,8 +2,13 @@ from kivy.app import App
 from kivy.lang import Builder
 from kivy.uix.screenmanager import ScreenManager, Screen 
 import requests
-from kivy.properties import StringProperty,ListProperty
+from kivy.properties import StringProperty,ListProperty,ObjectProperty
 from kivy.config import Config
+from textwrap import wrap
+from kivy.clock import mainthread
+from kivy.clock import Clock
+from kivy.uix.button import Button
+from kivy.clock import mainthread
 
 Config.set('graphics','width','500')
 Config.set('graphics','resizable','0')
@@ -18,6 +23,7 @@ class MainWindow(Screen):
 	team = StringProperty('')
 	
 	def login(self,username,password):
+		
 		url = 'http://127.0.0.1:5000/login'
 		obj = {'username':username,'password':password}
 		response = requests.post(url=url, data = obj)
@@ -52,18 +58,26 @@ class WindowManager(ScreenManager):
 	pass 
 
 class GroupHome(Screen):
+
 	username = StringProperty('')
 	groupplayers = ListProperty('')
-	response = StringProperty('')
-	groupevents = StringProperty('')
+	groupevents = ListProperty('')
 
 	def see_group_events(self,username):
+		event_list = []
+		all_events = []
 		url = 'http://127.0.0.1:5000/group_events'
 		obj = {'username':username}
 		response = requests.post(url=url, data = obj)
 		response = response.content.decode('utf-8')
-		self.groupevents = response
-
+		print(response)
+		response = response.replace(',', '\t')
+		event_list =response.split('\t')
+		print(event_list)
+		self.groupevents = [str(event_list[i:i+3]) for i in range(0,len(event_list),4)]
+		self.groupevents	
+		print(self.groupevents)
+	
 	pass
 
 class CreateGroupEvent(Screen):
@@ -84,13 +98,23 @@ class CreateGroupEvent(Screen):
 			   'team':team,
 			   'privacy':1
 			    }
+
+		requests.post(url=url, data=obj)
+		
 		pass
 	
 	pass
 
 class SeeGroupEvents(Screen):
 
-	groupevents = StringProperty('')
+	self.groupevents = ListProperty('')
+
+	@mainthread
+	def on_enter(self):
+		for i in self.allgroupevents:
+			button = Button(text=i,pos=(150,200),size_hint=(0.1,0.1))
+			self.ids.seeallgroupevents.add_widget(button)
+
 
 	pass
 
@@ -99,12 +123,36 @@ class CreateEvent(Screen):
 	team = StringProperty('')
 	username = StringProperty('')
 
+	def create_event(self,username,eventarena,daytime,gameplayduration,latitude,longitude,team):
+
+		url = 'http://127.0.0.1:5000/create_event'
+		obj = obj = {'creater':username,
+			   'player':username,
+			   'eventarena':eventarena,
+			   'daytime':daytime,
+			   'gameplaytime':gameplayduration,
+			   'latitude':latitude,
+			   'longitude':longitude,
+			   'team':team,
+			   'privacy':0
+			    }
+
+		requests.post(url=url,data=obj)
+	
+		pass
+
+	pass
+
+class FindEvents(Screen):
+
 	pass
 
 kv = Builder.load_file('app.kv')
 
 class FlexFront(App):
+
 	def build(self):
+		
 		return kv 
 
 if __name__ == '__main__':

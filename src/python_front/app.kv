@@ -34,6 +34,9 @@ WindowManager:
 		name: 'CreateEvent'
 		team: main.team
 		username: playerhome.username
+	FindEvents
+		id: findevents
+		name: 'FindEvents'
 
 <MainWindow>:
 	
@@ -92,7 +95,7 @@ WindowManager:
 			pos:(375,20)
 			text:'FindEvents'
 			on_release: 
-				app.root.current = 'Main'
+				app.root.current = 'FindEvents'
 				root.manager.transition.direction = 'right'
 
 		Label:
@@ -109,6 +112,14 @@ WindowManager:
 			size_hint:(0.2,0.2)
 			pos:(375,350)
 			text: 'phone :' + root.phonenumber
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'Log Out'
+			on_release: 
+				app.root.current = 'Main'
+				root.manager.transition.direction = 'right'
 
 <GroupHome>
 	
@@ -209,11 +220,11 @@ WindowManager:
 <SeeGroupEvents>
 
 	FloatLayout:
+		id:seeallgroupevents
 
-		Label:
-			text:root.groupevents
-			size_hint:(0.2,0.2)
-			pos:(100,100)
+		ListView:
+			pos: (0,-120)
+			item_strings: root.groupevents
 
 		Button:
 			size_hint:(0.14,0.07)
@@ -279,3 +290,7 @@ WindowManager:
 			on_release: 
 				app.root.current = 'PlayerHome'
 				root.manager.transition.direction = 'right'
+
+<FindEvents>
+
+
