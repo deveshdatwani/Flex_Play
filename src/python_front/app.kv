@@ -34,13 +34,28 @@ WindowManager:
 		name: 'CreateEvent'
 		team: main.team
 		username: playerhome.username
-	FindEvents
+	FindEvents:
 		id: findevents
 		name: 'FindEvents'
-	SeeEventDetails
+	SeeEventDetails:
 		id: seeeventdetails
 		name: 'SeeEventDetails'
-		eventplayers = seegroupevents.eventplayers
+		eventplayers: seegroupevents.eventplayers
+		eventname: seegroupevents.eventname
+		eventdate: seegroupevents.eventdate
+	YourEvents:
+		id: yourevents
+		name: 'YourEvents'
+		yourevents: playerhome.yourevents
+	YourNotifications:
+		id: yournotifications
+		name: 'YourNotifications'
+		yournotifications: playerhome.yournotifications
+	InvitePlayers:
+		id: inviteplayers
+		name: 'InvitePlayers'
+		username: main.username
+		team: main.team
 
 <MainWindow>:
 	
@@ -79,28 +94,54 @@ WindowManager:
 	FloatLayout:
 
 		Button:
-			size_hint:(0.2,0.2)
-			pos:(25,20)
-			text:'GroupHome'
+			size_hint:(0.18,0.18)
+			pos:(50,20)
+			text:'Group Home'
 			on_release: 
 				app.root.current = 'GroupHome'
 				root.manager.transition.direction = 'left'
 				root.go_to_group_home(root.username)
 		Button:
-			size_hint:(0.2,0.2)
-			pos:(200,20)
-			text:'CreateEvent'
+			size_hint:(0.18,0.18)
+			pos:(150,20)
+			text:'Create Event'
 			on_release: 
 				app.root.current = 'CreateEvent'
 				root.manager.transition.direction = 'left'
 
 		Button:
-			size_hint:(0.2,0.2)
-			pos:(375,20)
-			text:'FindEvents'
+			size_hint:(0.18,0.18)
+			pos:(250,20)
+			text:'Find Events'
 			on_release: 
 				app.root.current = 'FindEvents'
 				root.manager.transition.direction = 'right'
+
+		Button:
+			size_hint:(0.18,0.18)
+			pos:(350,20)
+			text:'Your Events'
+			on_release:
+				app.root.current = 'YourEvents'
+				root.manager.transition.direction = 'left'
+				root.see_your_events(root.username)
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'Log Out'
+			on_release: 
+				app.root.current = 'Main'
+				root.manager.transition.direction = 'right'
+
+		Button:
+			size_hint:(0.25,0.07)
+			pos:(350,500)
+			text:'Notifications'
+			on_release: 
+				app.root.current = 'YourNotifications'
+				root.manager.transition.direction = 'left'
+				root.see_your_notifications(root.username)
 
 		Label:
 			size_hint:(0.2,0.2)
@@ -117,14 +158,6 @@ WindowManager:
 			pos:(375,350)
 			text: 'phone :' + root.phonenumber
 
-		Button:
-			size_hint:(0.14,0.07)
-			pos:(10,500)
-			text:'Log Out'
-			on_release: 
-				app.root.current = 'Main'
-				root.manager.transition.direction = 'right'
-
 <GroupHome>
 	
 	FloatLayout: 
@@ -140,7 +173,7 @@ WindowManager:
 
 		Button:
 			size_hint:(0.2,0.2)
-			pos:(100,20)
+			pos:(75,20)
 			text:'Create Event'
 			on_release: 
 				app.root.current = 'CreateGroupEvent'
@@ -148,13 +181,21 @@ WindowManager:
 
 		Button:
 			size_hint:(0.2,0.2)
-			pos:(275,20)
+			pos:(200,20)
 			text:'See Events'
 			on_release: 
 				app.root.current = 'SeeGroupEvents'
 				root.manager.transition.direction = 'left'
 				root.see_group_events(root.username)
 		
+		Button:
+			size_hint:(0.2,0.2)
+			pos:(325,20)
+			text:'Invite Players'
+			on_release: 
+				app.root.current = 'InvitePlayers'
+				root.manager.transition.direction = 'left'
+
 		Button:
 			size_hint:(0.14,0.07)
 			pos:(10,500)
@@ -300,7 +341,85 @@ WindowManager:
 	FloatLayout:
 
 		ListView:
-			item_strings: [str(index) for index in eventplayers]
+			item_strings: root.eventplayers
+			pos:(5,-250)
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'SeeGroupEvents'
+				root.manager.transition.direction = 'right'
+
+		Button:
+			size_hint:(0.25,0.07)
+			pos:(150,5)
+			text: 'Join Event'
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,450)
+			text: root.eventname
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,400)
+			text: root.eventdate
+
+		Label:
+			size_hint:(0.2,0.2)
+			pos:(200,350)
+			text: 'Players In'
+
+<YourEvents>
+
+	FloatLayout:
+
+		Label:
+			text: 'Hello'
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'PlayerHome'
+				root.manager.transition.direction = 'right'
+
+
+<YourNotifications>
+	
+	FloatLayout:
+		id: seeyournotifications
+
+		Label:
+			text: 'Your Notifications'
+			pos: (50,200)
+
+		Button:
+			size_hint:(0.14,0.07)
+			pos:(10,500)
+			text:'<= Back'
+			on_release: 
+				app.root.current = 'PlayerHome'
+				root.manager.transition.direction = 'right'
+
+		ListView:
+			string_items: root.yournotifications
+			pos:(500,-150)
+
+
+<InvitePlayers>
+
+	FloatLayout:
+
+		TextInput:
+			text:'Invite by username'
+			id: invited
+			multiline: False
+			size_hint:(0.9,0.10)
+			pos:(25,340)
 
 		Button:
 			size_hint:(0.14,0.07)
@@ -310,5 +429,8 @@ WindowManager:
 				app.root.current = 'GroupHome'
 				root.manager.transition.direction = 'right'
 
-
-
+		Button:
+			text: 'Invite'
+			size_hint:(0.4,0.1)
+			pos:(125,40)
+			on_release: root.invite_player(root.username, root.team, invited.text)
