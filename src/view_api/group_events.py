@@ -22,8 +22,6 @@ def group_events():
 		query = 'SELECT username FROM players_master WHERE teamname = "' + teamname + '"'
 		cursor.execute(query)
 		group = cursor.fetchall()
-		#cursor.close()
-		#connector.close()
 		group = [x[0] for x in group]
 		group = ','.join(group)
 
@@ -45,7 +43,7 @@ def group_events():
 
 		
 	string_list = ','.join(string_list)
-
-	print(string_list)
+	cursor.close()
+	connector.close()
 
 	return string_list
