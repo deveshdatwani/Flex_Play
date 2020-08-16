@@ -17,4 +17,4 @@ def login():
 	else:
 		response = 'Hi'
 
-	return jsonify(access, response)
+	return response
