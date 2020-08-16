@@ -20,7 +20,7 @@ def register():
         emailid = request.form['email']
         phonenumber = request.form['phonenumber']
         teamname = request.form['teamname']      
-        connector = mysql.connector.connect(host='localhost',user='root',password='flexplay',database='flexplay')
+        connector = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',user='be87857da36e44',password='665f4638',database='heroku_26cfe5af0cd58f4')
     
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)

@@ -8,9 +8,12 @@ bp = Blueprint("player_home", __name__)
 @bp.route("/player_home", methods=("GET", "POST"))
 def player_home():
 
-    if request.method == "POST":
-        username = request.form["username"]
-        password = request.form["password"]
-        access, player = authorization(username, password)
-    
-    return player
+	if request.method == "POST":
+		username = request.form["username"]
+		password = request.form["password"]
+		access, player = authorization(username, password)
+
+	else:
+		player = 'Wait for it buddy'
+
+	return player
