@@ -17,11 +17,11 @@ def authorization(username, password):
 			player = dict(player_info_tuple)
 
 	if Player is None:
-		response = "User not found"
+		response = {'response':'User not found'}
 		access = {'access' : False}
 
 	elif not check_password_hash(player["password"], password):
-		response = 'Incorrect password'
+		response = {'response':'Incorrect password'}
 		access = {'access' : False}
 
 	elif check_password_hash(player['password'], password):

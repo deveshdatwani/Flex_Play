@@ -17,7 +17,16 @@ def group_event_home():
 		cursor = connector.cursor(buffered=True)
 		query = 'SELECT * FROM events_master WHERE creater = "' + creater + '"'
 		cursor.execute(query)
-		group = cursor.fetchall()
-		print(group)
+		events = cursor.fetchall()
+		cursor.close()
+		connector.close()
+		events = [[{'creater':x[0]},{'player':x[1]},
+					{'date-time':x[2]},{'location':x[3]},
+					{'group_name':x[4]},{'privacy':x[5]},
+					{'in_out':x[6]},{'lat':x[7]},{'lng':x[8]}] for x in events]
+		all_events = []
 		
-	return 'Hey'
+		for i, event in enumerate(events):
+			all_events.append({'event{}'.format(i):event})
+		
+	return jsonify({'events' : all_events})

@@ -24,7 +24,9 @@ def login():
 		cursor.close()
 		connector.close()
 		group = [x[0] for x in group]
-		group = ','.join(group)
+		all_players = []
+		for i, player in enumerate(group):
+			all_players.append({'player{}'.format(i):player})
 
 
-	return group
+	return jsonify({'group_players':all_players})

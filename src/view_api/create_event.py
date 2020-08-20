@@ -26,9 +26,11 @@ def create_event():
             val = creater, player, daytime, eventarena, latitude, longitude, team, privacy, gameplaytime
             cursor.execute(query, val)
             connector.commit() 
-            response = 'Created Event Successfully'
+            response = {'response':'Created Event Successfully'}
             cursor.close()
             connector.close()
+        else:
+            response = {'response':'something went wrong'}
        
 
     return response

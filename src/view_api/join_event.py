@@ -26,9 +26,11 @@ def join_event():
             val = creater, player, daytime, eventarena, latitude, longitude, team, privacy, gameplaytime
             cursor.execute(query, val)
             connector.commit() 
-            response = 'Joined The Event Successfully'
+            response = True
             cursor.close()
             connector.close()
+        else:
+            response = False
        
 
     return response
