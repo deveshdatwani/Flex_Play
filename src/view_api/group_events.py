@@ -23,27 +23,19 @@ def group_events():
 		cursor.execute(query)
 		group = cursor.fetchall()
 		group = [x[0] for x in group]
-		group = ','.join(group)
+		all_group_players = []
+		
+		for i, player in enumerate(group):
+			all_group_players.append({'player' : player})
 
 	if group is not None:
-		group = group.split(',')
 		event_list = []
-		string_list = []
 		
-		for player in group:
-			query = 'SELECT creater,eventarena,daytime,gameplaytime FROM events_master WHERE creater = "' + player + '"'
+		for player in all_group_players:
+			query = 'SELECT creater, eventarena, daytime, gameplaytime FROM events_master WHERE creater = "' + player['player'] + '"'
 			cursor.execute(query)
 			event = cursor.fetchone()
 			if event is not None:
-				event_list.append(event)
-		for i in event_list:
-			for j in i:
-				string_list.append(str(j))
-				print(j)
-
+				event_list.append([{'creater' : event[0]}, {'eventarena' : event[1]}, {'daytime' : event[2]}, {'gameplaytime' : event[3]}])
 		
-	string_list = ','.join(string_list)
-	cursor.close()
-	connector.close()
-
-	return string_list
+	return jsonify({'events': event_list})
