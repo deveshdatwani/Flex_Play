@@ -14,7 +14,7 @@ def login():
 	
 		if connector.is_connected():
 			cursor = connector.cursor()
-			query = 'SELECT username FROM group_master WHERE groupid = "' + groupid + '"'
+			query = 'SELECT username, firstname, lastname FROM group_master WHERE groupid = "' + groupid + '"'
 			cursor.execute(query)
 			response = cursor.fetchall()
 			group_players = []
@@ -37,7 +37,5 @@ def login():
 
 			cursor.close()
 			connector.close()
-			print(group_players)
-			print(group_events)
 			
 	return jsonify({'group_players':group_players, 'group_events':group_events})

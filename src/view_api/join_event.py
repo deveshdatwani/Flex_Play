@@ -5,32 +5,23 @@ import mysql.connector
 
 bp = Blueprint("join_event", __name__)
 
-@bp.route('/join_event', methods=['GET','POST'])
+@bp.route('/player_home/groups/group_home/group_event/join_event', methods=['GET','POST'])
 def join_event():
 
     if request.method == "POST":
-        creater = request.form['creater']
-        player = request.form['player']
-        daytime = request.form['daytime']
-        eventarena = request.form['eventarena']
-        latitude = request.form['latitude']
-        longitude = request.form['longitude']
-        team = request.form['team']
-        privacy = request.form['privacy']
-        gameplaytime = request.form['gameplaytime']
+        username = request.form['username']
+        firstname = request.form['firstname']
+        lastname = request.form['lastname']
+        eventid = request.form['eventid']
         connector = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',user='be87857da36e44',password='665f4638',database='heroku_26cfe5af0cd58f4')
     
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)
-            query = "INSERT INTO events_master(creater, player, daytime, eventarena, lat, lng, team, privacy, gameplaytime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s);" 
-            val = creater, player, daytime, eventarena, latitude, longitude, team, privacy, gameplaytime
+            query = "INSERT INTO event_players (username, firstname, lastname, eventid) VALUES (%s, %s, %s, %s);" 
+            val = username, firstname, lastname, eventid
             cursor.execute(query, val)
             connector.commit() 
-            response = True
             cursor.close()
             connector.close()
-        else:
-            response = False
-       
 
-    return response
+    return 'Joined event'
