@@ -2,7 +2,6 @@ from flask import Blueprint
 from flask import request
 from flask import jsonify
 import mysql.connector
-import group_home
 
 bp = Blueprint("see_event_details", __name__)
 

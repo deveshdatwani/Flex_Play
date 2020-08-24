@@ -9,6 +9,8 @@ def authorization(username, password):
 		query = 'SELECT * FROM players_master WHERE username = "' + username + '"'
 		cursor.execute(query)
 		Player = cursor.fetchone()
+		cursor.close()
+		connector.close() 
 		
 		if Player is not None:
 			player_info = Player 	
@@ -27,8 +29,5 @@ def authorization(username, password):
 	elif check_password_hash(player['password'], password):
 		response = player 
 		access = {'access' : True}
-	
-	cursor.close()
-	connector.close() 
 
 	return access, response
