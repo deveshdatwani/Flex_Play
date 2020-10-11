@@ -21,7 +21,7 @@ def create_event():
         eventid = random.randit(100000,999999)
         date_time = request.form['daytime']
         connector = mysql.connector.connect(host='us-cdbr-east-02.cleardb.com',user='be87857da36e44',password='665f4638',database='heroku_26cfe5af0cd58f4')
-    
+
         if connector.is_connected():
             cursor = connector.cursor(buffered=True)
             query = "INSERT INTO events_master (creater, eventarena, playtime, latitude, longitude, privacy, eventid, daytime) VALUES (%s, %s, %s, %s, %s, %s, %s, %s);" 
@@ -34,8 +34,8 @@ def create_event():
             connector.commit()
             cursor.close()
             connector.close()
-            response = 'response':'Created Event Successfully'
+            response = {'response':'Created Event Successfully'}
         else:
-            response = 'response':'something went wrong'
+            response = {'response':'something went wrong'}
 
     return response
