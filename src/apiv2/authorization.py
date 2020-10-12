@@ -2,11 +2,11 @@ from werkzeug.security import check_password_hash
 import mysql.connector
 
 def authorization(username, password):
-	connector = mysql.connector.connect(host='localhist',user='root',database='flexplay')
+	connector = mysql.connector.connect(host='localhost',user='root',database='flexplay')
 
 	if connector.is_connected():
 		cursor = connector.cursor()
-		query = 'SELECT * FROM players_master WHERE username = "' + username + '"'
+		query = 'SELECT * FROM player_master WHERE username = "' + username + '"'
 		cursor.execute(query)
 		Player = cursor.fetchone()
 		cursor.close()
@@ -14,7 +14,7 @@ def authorization(username, password):
 
 		if Player is not None:
 			player_info = Player
-			columns = ('playerid','username','firstname','lastname','email','phonenumber','groupid','teamname','password')
+			columns = ('playerid','username','password','firstname','lastname','email','phonenumber')
 			player_info_tuple = zip(columns, player_info)
 			player = dict(player_info_tuple)
 
