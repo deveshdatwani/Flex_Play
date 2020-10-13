@@ -16,6 +16,7 @@ def group_home():
 	query = 'SELECT playerid FROM player_groups WHERE groupid = ' + groupid
 	cursor.execute(query)
 	group_players = cursor.fetchall()
+	print(group_players)
 	group_players = group_players[0]
 	query = 'SELECT groupname FROM group_master WHERE groupid = ' + groupid
 	cursor.execute(query)
