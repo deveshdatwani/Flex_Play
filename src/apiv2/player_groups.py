@@ -14,8 +14,7 @@ def login():
 
 		if connector.is_connected():
 			cursor = connector.cursor()
-			query = 'SELECT groupid, admin FROM player_groups WHERE playerid = ' + playerid 
-			print(query)
+			query = 'SELECT groupid, admin FROM player_groups WHERE playerid = ' + playerid
 			cursor.execute(query)
 			groups = cursor.fetchall()
 
@@ -27,7 +26,13 @@ def login():
 					query = 'SELECT groupname FROM group_master WHERE groupid = "' + group + '"'
 					cursor.execute(query)
 					group_name = cursor.fetchone()
-					player_groups[group] = group_name
+					try:
+						group_name = ''.join(group_name)
+
+					except:
+						None
+
+					player_groups[group] = {'name':group_name}
 
 			else:
 				return 'player not associated with any group'

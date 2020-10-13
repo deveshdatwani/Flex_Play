@@ -6,7 +6,7 @@ import mysql.connector
 bp = Blueprint("create_group", __name__)
 
 @bp.route("/create_group", methods=("GET", "POST"))
-def login():
+def create_group():
 
 	if request.method == "POST":
 		playerid = request.form["playerid"]
