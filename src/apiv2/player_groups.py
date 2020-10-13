@@ -14,12 +14,12 @@ def login():
 
 		if connector.is_connected():
 			cursor = connector.cursor()
-			query = 'SELECT groupid, admin FROM player_groups WHERE playerid = "' + playerid + '"'
+			query = 'SELECT groupid, admin FROM player_groups WHERE playerid = ' + playerid 
+			print(query)
 			cursor.execute(query)
 			groups = cursor.fetchall()
 
 			if len(groups) != 0:
-
 				player_groups = {}
 
 				for group in groups:
