@@ -16,8 +16,7 @@ def group_home():
 	query = 'SELECT playerid FROM player_groups WHERE groupid = ' + groupid
 	cursor.execute(query)
 	group_players = cursor.fetchall()
-	print(group_players)
-	group_players = group_players[0]
+	group_players = group_players
 	query = 'SELECT groupname FROM group_master WHERE groupid = ' + groupid
 	cursor.execute(query)
 	group_name = cursor.fetchone()
@@ -25,17 +24,20 @@ def group_home():
 
 	if len(group_players) != 0:
 		players = {}
-		columns = ['username','firstname','lastname','email','phonenumber']
+		columns = ['playerid','username','firstname','lastname','email','phonenumber']
 
-		for player in group_players:
-			query = 'SELECT username, firstname, lastname, email, phonenumber FROM player_master WHERE playerid = ' + player
+		for i, player in enumerate(group_players):
+			player = ''.join(player)
+			query = 'SELECT playerid, username, firstname, lastname, email, phonenumber FROM player_master WHERE playerid = ' + player
 			cursor.execute(query)
 			group_player = cursor.fetchone()
 			player_info = zip(columns, group_player)
 			player_info = dict(player_info)
+			players[i] = player_info
 
-	players[player] = player_info
+		return jsonify({'group_name':group_name, 'group_players':players})
+
 	cursor.close()
 	connector.close()
 
-	return jsonify({'group_name':group_name, 'group_players':players})
+	return 'This group has no players'
