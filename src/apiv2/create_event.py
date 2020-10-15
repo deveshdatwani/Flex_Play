@@ -35,7 +35,7 @@ def register():
                 cursor.execute(query, values)
                 connector.commit()
                 query = 'INSERT INTO event_players (playerid, eventid) VALUES (%s,%s)'
-                values = eventid, playerid
+                values = playerid, eventid
                 cursor.execute(query, values)
                 connector.commit()
                 cursor.close()
