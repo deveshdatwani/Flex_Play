@@ -33,6 +33,10 @@ def register():
                 values = eventid, playtime, maxplayers, date, creator, eventname, groupid
                 cursor.execute(query, values)
                 connector.commit()
+                query = 'INSERT INTO player_events (playerid, eventid) VALUES (%s,%s)'
+                values = eventid, playerid
+                query.execute(query, values)
+                query.commit()
                 cursor.close()
                 connector.close()
 
