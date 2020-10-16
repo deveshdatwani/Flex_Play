@@ -1,6 +1,6 @@
-from kivy.app import App 
+from kivy.app import App
 from kivy.lang import Builder
-from kivy.uix.screenmanager import ScreenManager, Screen 
+from kivy.uix.screenmanager import ScreenManager, Screen
 import requests
 from kivy.properties import StringProperty,ListProperty,ObjectProperty
 from kivy.config import Config
