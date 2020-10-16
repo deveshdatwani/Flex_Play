@@ -15,15 +15,15 @@ Config.set('graphics','resizable','0')
 Config.set('graphics', 'height','600')
 
 class MainWindow(Screen):
-	
+
 	username = StringProperty('')
 	firstname = StringProperty('')
 	email = StringProperty('')
 	phonenumber = StringProperty('')
 	team = StringProperty('')
-	
+
 	def login(self,username,password):
-		
+
 		url = 'http://127.0.0.1:5000/login'
 		obj = {'username':username,'password':password}
 		response = requests.post(url=url, data = obj)
@@ -32,12 +32,12 @@ class MainWindow(Screen):
 		self.email = response.json()[1]['email']
 		self.phonenumber = str(response.json()[1]['phonenumber'])
 		self.team = response.json()[1]['teamname']
-		
+
 		return response.json()[0]['access']
 	pass
 
 class PlayerHome(Screen):
-	
+
 	username = StringProperty('')
 	firstname = StringProperty('')
 	email = StringProperty('')
@@ -71,8 +71,8 @@ class PlayerHome(Screen):
 	pass
 
 class WindowManager(ScreenManager):
-	
-	pass 
+
+	pass
 
 class GroupHome(Screen):
 
@@ -82,7 +82,7 @@ class GroupHome(Screen):
 	yournotifications = ListProperty('')
 
 	def see_group_events(self,username):
-		
+
 		event_list = []
 		all_events = []
 		url = 'http://127.0.0.1:5000/group_events'
@@ -92,7 +92,7 @@ class GroupHome(Screen):
 		response = response.replace(',', '\t')
 		event_list =response.split('\t')
 		self.groupevents = [str(event_list[i:i+3]) for i in range(0,len(event_list),4)]
-		
+
 		pass
 
 	pass
@@ -117,9 +117,9 @@ class CreateGroupEvent(Screen):
 			    }
 
 		requests.post(url=url, data=obj)
-		
+
 		pass
-	
+
 	pass
 
 class SeeGroupEvents(Screen):
@@ -151,7 +151,7 @@ class SeeGroupEvents(Screen):
 		self.manager.current = 'SeeEventDetails'
 		self.eventname = creater + "'s " + 'Event'
 		self.eventdate = "Event Date: " + daytime
-	
+
 	pass
 
 class CreateEvent(Screen):
@@ -174,7 +174,7 @@ class CreateEvent(Screen):
 			    }
 
 		requests.post(url=url,data=obj)
-	
+
 		pass
 
 	pass
@@ -188,7 +188,7 @@ class SeeEventDetails(Screen):
 	eventplayers = ListProperty('')
 	eventname = StringProperty('')
 	eventdate = StringProperty('')
-	
+
 	pass
 
 class YourEvents(Screen):
