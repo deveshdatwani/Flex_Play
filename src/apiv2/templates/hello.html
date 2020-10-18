@@ -14,15 +14,31 @@
 
 <style>
     body {
-        background-image: url('https://upload.wikimedia.org/wikipedia/commons/9/90/Football_pitch.svg');
-        background-repeat: no-repeat;
-	background-size: contain;
-	background-position: center;  
-  }
+        height: 100vh;
+        background-color: lightgreen;
+    }
+    .userform {
+        width: 50%;
+        text-align: center;
+        margin: auto;
+        margin-top: 30rem;
+        font-size: 2rem;
+    }
 </style>
 
 <body>
-
-    <h1 style="text-align:center; font-size: 6rem; line-height:100vh; color:yellow;">Welcome to Flex Play</h1> 
+    <div class="userform">
+        <form>
+            <div>
+                <label>username</label>
+                <input type="name" height="48" placeholder="username">
+            </div>
+            <div>
+                <label>password</label>
+                <input type="password" height="2rem" placeholder="password">
+            </div>
+        </form>
+    </div> 
 </body>
+
 </html>
